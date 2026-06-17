@@ -672,7 +672,7 @@ export const products = [
     image: "images/products/umbrella.jpg",
     name: "Large Green Umbrella",
     rating: {
-      stats: 5,
+      stars: 5,
       count: 456
     },
     priceCents: 2999
