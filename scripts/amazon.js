@@ -1,4 +1,7 @@
-
+import {cart} from '../data/cart.js';  
+// modules concept-import and export
+// conflicts occur only when there is another variable with same name
+// Modules = are better way to organize our code
 
 let productsHTML = '';
 
@@ -43,7 +46,7 @@ products.forEach((product) => {
 
       <div class="product-spacer"></div>
 
-      <div class="added-to-cart">
+      <div class="added-to-cart js-added-to-cart-${product.id}">
         <img src="images/icons/checkmark.png">
         Added
       </div>
@@ -62,10 +65,13 @@ console.log(productsHTML)
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
+const addedMessageTimeouts = {};
+
 document.querySelectorAll('.js-add-to-cart')
   .forEach((button) => {
     button.addEventListener('click', () => {
-      const productId = button.dataset.productId;
+      
+      addedMessage.classList.add('added-to-cart-visible');
 
       let matchingItem;
 
@@ -79,8 +85,8 @@ document.querySelectorAll('.js-add-to-cart')
         matchingItem.quantity += 1
       } else {
         cart.push({
-          productId: productId,
-          quantity: 1
+          productId,
+          quantity
         });
       }
 
@@ -93,7 +99,21 @@ document.querySelectorAll('.js-add-to-cart')
       document.querySelector('.js-cart-quantity')
         .innerHTML = cartQuantity;
 
+      const addedMessage = document.querySelector(`.js-added-to-cart-${productId}`);
 
+
+      addedMessage.classList.add('added-to-cart-visible');
+
+      const previousTimeoutId = addedMessageTimeouts[productId];
+      if (previousTimeoutId) {
+        clearTimeout(previousTimeoutId);
+      }
+
+      const timeoutId = setTimeout(() => {
+        addedMessage.classList.remove('added-to-cart-visible');
+      }, 2000);
+
+      addedMessageTimeouts[productId] = timeoutId;
 
     });
   });
