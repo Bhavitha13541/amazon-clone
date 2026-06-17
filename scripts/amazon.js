@@ -3,6 +3,8 @@ import {cart} from '../data/cart.js';
 // conflicts occur only when there is another variable with same name
 // Modules = are better way to organize our code
 
+import {products} from '../data/products.js';
+
 let productsHTML = '';
 
 products.forEach((product) => {
